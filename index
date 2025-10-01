@@ -5,161 +5,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RxConnect Pro - Investor Pitch Deck</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { margin: 0; overflow: hidden; }
-        .slide { display: none; }
-        .slide.active { display: flex; }
-    </style>
 </head>
 <body class="bg-gray-100">
-    <div id="deck" class="w-full h-screen flex flex-col">
-        <div id="slide-container" class="flex-1 bg-white shadow-lg mx-4 my-4 rounded-lg overflow-auto relative">
-            <!-- Slides will be inserted here -->
+    <div class="w-full h-screen flex flex-col">
+        <div id="slide-container" class="flex-1 bg-white shadow-lg mx-4 my-4 rounded-lg overflow-auto relative p-16">
+            <div class="flex flex-col items-center justify-center h-full bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white rounded-xl">
+                <div class="text-center space-y-6 px-8">
+                    <h1 class="text-6xl font-bold mb-4">RxConnect Pro</h1>
+                    <p class="text-3xl font-light mb-8">AI-Powered Prescription Assistance at Scale</p>
+                    <div class="flex gap-8 justify-center text-lg">
+                        <div>🛡️ HIPAA Compliant</div>
+                        <div>⚡ 100% Automated</div>
+                        <div>📈 SOC 2 Certified</div>
+                    </div>
+                    <p class="text-xl mt-12 opacity-80">Investor Presentation</p>
+                    <button onclick="currentSlide = 1; renderSlide();" class="mt-8 bg-white text-blue-900 px-8 py-4 rounded-lg font-bold text-xl hover:bg-blue-50 transition">
+                        Start Presentation →
+                    </button>
+                </div>
+            </div>
         </div>
         
         <div class="flex items-center justify-between px-8 py-4 bg-white border-t">
-            <button id="prev-btn" class="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition">
+            <button id="prev-btn" onclick="prevSlide()" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-300 transition">
                 ← Previous
             </button>
             
-            <div class="flex items-center gap-4">
-                <span id="slide-counter" class="text-lg font-semibold text-gray-700"></span>
-                <div id="dots" class="flex gap-1"></div>
-            </div>
+            <span id="slide-counter" class="text-lg font-semibold text-gray-700">Slide 1 of 4</span>
             
-            <button id="next-btn" class="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition">
+            <button id="next-btn" onclick="nextSlide()" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-300 transition">
                 Next →
             </button>
         </div>
     </div>
 
     <script>
+        let currentSlide = 0;
+        
         const slides = [
-            // Slide 1: Title
-            `<div class="flex flex-col items-center justify-center h-full bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white">
+            `<div class="flex flex-col items-center justify-center h-full bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white rounded-xl">
                 <div class="text-center space-y-6 px-8">
                     <h1 class="text-6xl font-bold mb-4">RxConnect Pro</h1>
                     <p class="text-3xl font-light mb-8">AI-Powered Prescription Assistance at Scale</p>
                     <div class="flex gap-8 justify-center text-lg">
-                        <div class="flex items-center gap-2">
-                            <span>🛡️ HIPAA Compliant</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span>⚡ 100% Automated</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span>📈 SOC 2 Certified</span>
-                        </div>
+                        <div>🛡️ HIPAA Compliant</div>
+                        <div>⚡ 100% Automated</div>
+                        <div>📈 SOC 2 Certified</div>
                     </div>
-                    <p class="text-xl mt-12 opacity-80">[Company Name] | ${new Date().toLocaleDateString()}</p>
                 </div>
             </div>`,
-
-            // Slide 2: The Problem
-            `<div class="p-16 space-y-8">
-                <h2 class="text-4xl font-bold text-gray-800 mb-8">The $50B Problem</h2>
+            
+            `<div class="space-y-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">The $50B Problem</h2>
                 <div class="h-1 bg-gradient-to-r from-blue-600 to-purple-600 w-32 mb-8"></div>
-                
-                <p class="text-2xl text-gray-700 leading-relaxed">
-                    <strong>Prescription costs are crushing patients and employers</strong> — but existing copay assistance programs are broken.
-                </p>
-                
+                <p class="text-2xl text-gray-700"><strong>Prescription costs are crushing patients and employers</strong> — but existing copay assistance programs are broken.</p>
                 <div class="grid grid-cols-2 gap-6">
                     <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg">
                         <h3 class="text-xl font-bold text-red-900 mb-3">For Patients</h3>
                         <ul class="space-y-2 text-gray-700">
                             <li>• Average specialty drug: <strong>$6,000-$12,000/year</strong></li>
                             <li>• 30% abandon prescriptions due to cost</li>
-                            <li>• Complex enrollment processes take 45+ minutes</li>
-                            <li>• Programs change constantly, no guidance</li>
+                            <li>• Complex enrollment takes 45+ minutes</li>
                         </ul>
                     </div>
-                    
                     <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg">
                         <h3 class="text-xl font-bold text-red-900 mb-3">For Providers</h3>
                         <ul class="space-y-2 text-gray-700">
                             <li>• Call centers: <strong>$45-$85/hour per agent</strong></li>
                             <li>• High turnover (40-60% annually)</li>
-                            <li>• Limited hours, long hold times</li>
                             <li>• Manual processes, human error</li>
                         </ul>
                     </div>
                 </div>
-                
-                <div class="bg-blue-100 border-2 border-blue-500 p-6 rounded-lg mt-6">
-                    <p class="text-xl text-blue-900 text-center">
-                        <strong>$50B+ spent annually</strong> on prescription assistance programs, yet <strong>enrollment rates remain below 35%</strong>
-                    </p>
-                </div>
             </div>`,
-
-            // Slide 3: The Solution
-            `<div class="p-16 space-y-6">
-                <h2 class="text-4xl font-bold text-gray-800 mb-8">Our Solution: AI-First Prescription Assistance</h2>
+            
+            `<div class="space-y-6">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">AI-First Solution</h2>
                 <div class="h-1 bg-gradient-to-r from-blue-600 to-purple-600 w-32 mb-8"></div>
-                
-                <p class="text-2xl text-gray-700 leading-relaxed">
-                    <strong>RxConnect Pro automates the entire copay assistance workflow</strong> using conversational AI and intelligent APIs.
-                </p>
-                
+                <p class="text-2xl text-gray-700"><strong>RxConnect Pro automates the entire copay assistance workflow</strong> using conversational AI.</p>
                 <div class="grid grid-cols-3 gap-6 mt-8">
                     <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border-2 border-blue-300">
                         <div class="bg-blue-600 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4">1</div>
                         <h3 class="text-lg font-bold text-blue-900 mb-3">Intelligent Outreach</h3>
-                        <p class="text-gray-700">AI agents proactively contact members about available programs via voice, SMS, and email</p>
+                        <p class="text-gray-700">AI agents proactively contact members about available programs</p>
                     </div>
-                    
                     <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border-2 border-green-300">
                         <div class="bg-green-600 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4">2</div>
                         <h3 class="text-lg font-bold text-green-900 mb-3">Real-Time Matching</h3>
-                        <p class="text-gray-700">Searches 500+ programs by medication, insurance type, and eligibility in seconds</p>
+                        <p class="text-gray-700">Searches 500+ programs by medication and insurance in seconds</p>
                     </div>
-                    
                     <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl border-2 border-purple-300">
                         <div class="bg-purple-600 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4">3</div>
                         <h3 class="text-lg font-bold text-purple-900 mb-3">Complete Enrollment</h3>
-                        <p class="text-gray-700">Guides patients through entire process, submits applications, and follows up automatically</p>
+                        <p class="text-gray-700">Guides patients through entire process automatically</p>
                     </div>
                 </div>
-                
                 <div class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white p-8 rounded-xl mt-8">
                     <div class="grid grid-cols-4 gap-6 text-center">
-                        <div>
-                            <p class="text-4xl font-bold">24/7</p>
-                            <p class="text-sm mt-2 opacity-90">Availability</p>
-                        </div>
-                        <div>
-                            <p class="text-4xl font-bold">90%+</p>
-                            <p class="text-sm mt-2 opacity-90">Cost Reduction</p>
-                        </div>
-                        <div>
-                            <p class="text-4xl font-bold">&lt;3min</p>
-                            <p class="text-sm mt-2 opacity-90">Avg Call Time</p>
-                        </div>
-                        <div>
-                            <p class="text-4xl font-bold">100%</p>
-                            <p class="text-sm mt-2 opacity-90">Automated</p>
-                        </div>
+                        <div><p class="text-4xl font-bold">24/7</p><p class="text-sm mt-2">Availability</p></div>
+                        <div><p class="text-4xl font-bold">90%+</p><p class="text-sm mt-2">Cost Reduction</p></div>
+                        <div><p class="text-4xl font-bold">&lt;3min</p><p class="text-sm mt-2">Avg Call Time</p></div>
+                        <div><p class="text-4xl font-bold">100%</p><p class="text-sm mt-2">Automated</p></div>
                     </div>
                 </div>
             </div>`,
-
-            // Add closing slide
-            `<div class="flex flex-col items-center justify-center h-full space-y-8 text-center p-16">
-                <div class="space-y-4">
-                    <h2 class="text-4xl font-bold text-gray-800">Join Us in Transforming Healthcare</h2>
-                    <p class="text-2xl text-gray-600 max-w-3xl">
-                        Through AI automation, we're helping millions of patients access life-saving medications while reducing costs for employers and pharmacies.
-                    </p>
-                </div>
-                
+            
+            `<div class="flex flex-col items-center justify-center h-full space-y-8 text-center">
+                <h2 class="text-4xl font-bold text-gray-800">Join Us in Transforming Healthcare</h2>
+                <p class="text-2xl text-gray-600 max-w-3xl">Through AI automation, we're helping millions of patients access life-saving medications.</p>
                 <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-8 rounded-xl max-w-2xl">
-                    <p class="text-xl mb-6">Our vision is simple but ambitious:</p>
-                    <p class="text-3xl font-bold">
-                        Every patient who needs prescription assistance should get it — automatically, instantly, and at no extra cost.
-                    </p>
+                    <p class="text-3xl font-bold">Every patient who needs prescription assistance should get it — automatically, instantly, and at no extra cost.</p>
                 </div>
-                
                 <div class="pt-8">
                     <p class="text-xl text-gray-700 mb-4">Let's talk about partnering:</p>
                     <p class="text-2xl font-bold text-gray-800">[Your Email]</p>
@@ -168,52 +124,31 @@
             </div>`
         ];
 
-        let currentSlide = 0;
-        const container = document.getElementById('slide-container');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const counter = document.getElementById('slide-counter');
-        const dots = document.getElementById('dots');
-
         function renderSlide() {
-            container.innerHTML = slides[currentSlide];
-            counter.textContent = `Slide ${currentSlide + 1} of ${slides.length}`;
-            prevBtn.disabled = currentSlide === 0;
-            nextBtn.disabled = currentSlide === slides.length - 1;
-            
-            // Update dots
-            dots.innerHTML = slides.map((_, idx) => 
-                `<button class="w-2 h-2 rounded-full transition ${idx === currentSlide ? 'bg-blue-600 w-8' : 'bg-gray-300'}" onclick="goToSlide(${idx})"></button>`
-            ).join('');
+            document.getElementById('slide-container').innerHTML = slides[currentSlide];
+            document.getElementById('slide-counter').textContent = `Slide ${currentSlide + 1} of ${slides.length}`;
+            document.getElementById('prev-btn').disabled = currentSlide === 0;
+            document.getElementById('next-btn').disabled = currentSlide === slides.length - 1;
         }
 
-        function goToSlide(index) {
-            currentSlide = index;
-            renderSlide();
-        }
-
-        prevBtn.addEventListener('click', () => {
-            if (currentSlide > 0) {
-                currentSlide--;
-                renderSlide();
-            }
-        });
-
-        nextBtn.addEventListener('click', () => {
+        function nextSlide() {
             if (currentSlide < slides.length - 1) {
                 currentSlide++;
                 renderSlide();
             }
-        });
+        }
 
-        // Keyboard navigation
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                renderSlide();
+            }
+        }
+
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') prevBtn.click();
-            if (e.key === 'ArrowRight') nextBtn.click();
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'ArrowRight') nextSlide();
         });
-
-        // Initial render
-        renderSlide();
     </script>
 </body>
 </html>
